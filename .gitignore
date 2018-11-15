@@ -106,3 +106,4 @@ venv.bak/
 .idea
 /migrations
 /platforms/migrations
+/api/migrations

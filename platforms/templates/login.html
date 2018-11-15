@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="login">
+    <div class="slide-block"></div>
+    <div class="login-page">
+        <div class="logo">
+            <img src="{% static 'img/daocloud.png'%}">
+        </div>
+
+
+        <div class="login-container">
+            <h2 class="title">DaoCLoud QA Center</h2>
+            <h4 class="subtitle">Quality Assurance Platform</h4>
+            <hr class="hr-gradient header-line">
+            <form method="post" action="/login/">
+                {% csrf_token%}
+                <div class="login-form">
+                    <div class="form-group">
+                        <label class="capitalize">username</label>
+                        <div class="dao-input-container block" tabindex="1">
+                            <div class="dao-input-inner"></div>
+                            <input type="text" class="d-input long" name="username">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="capitalize">Password</label>
+                        <div class="dao-input-container block" tabindex="2">
+                            <div class="dao-input-inner"></div>
+                            <input type="password" class="d-input long" name="password">
+                        </div>
+
+                    </div>
+                    <h4 class="error_msg">{{  error_msg  }}</h4>
+
+                    <button  tabindex="3" class="dao-btn blue login-btn">Login</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="slide-block">
+        <footer>DaoCloud QA Center 1.0.0 | Quality Assurance Platform</footer>
+    </div>
+
+</div>
+</body>
+</html>

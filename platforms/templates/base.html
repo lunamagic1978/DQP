@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load staticfiles %}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/noty.css' %}">
+
+    <script src="/static/js/noty.js" type="text/javascript"></script>
+    <script src="/static/js/common.js" type="text/javascript"></script>
+
+
+    <title>Title</title>
+    {%  block head  %}
+    {%  endblock  %}
+</head>
+<body>
+
+<div id="app">
+    <div class="global-navigator-container">
+        <nav class="g-nav">
+            <div class="nav-left-container">
+                <div class="nav-left">
+                    <ul class="app-switcher">
+                        <li  class="link-select-container">
+                            <span class="selected-text">
+                                DaoCLoud QA Center
+                            </span>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="nav-right-container">
+                <div class="nav-right">
+                    <ul class="nav-right-menu">
+                   <li class="nav-menu">
+                       <a class="nav-button">
+                            <span class="nav-button-text">{{  username  }}</span>
+                       </a>
+                   </li>
+                        <li class="nav-menu">
+                        <a class="nav-button" href="/logout/">
+                            <span class="nav-button-text">Logout</span>
+                        </a>
+
+                    </li>
+
+                </ul>
+                </div>
+
+            </div>
+        </nav>
+
+    </div>
+    <div class="layout">
+        <menu class="sidebar scrollable">
+            <div class="menu-panel">
+                <div class="menus">
+                    <section class="menu-section">
+                        <h6 class="menu-section-name">接口</h6>
+                        <menu>
+                            <span class="menu-info active" style="padding-left: 0px">
+                                <span  class="expand-arrow"></span>
+                                <svg></svg>
+                                <span class="name">项目管理</span>
+                                <div  class="pull-right"></div>
+                            </span>
+                            <ul class="children"></ul>
+                        </menu>
+                        <menu>
+                            <span class="menu-info" style="padding-left: 0px">
+                                <span  class="expand-arrow"></span>
+                                <svg></svg>
+                                <span class="name">测试报告</span>
+                                <div  class="pull-right"></div>
+                            </span>
+                            <ul class="children"></ul>
+                        </menu>
+
+                    </section>
+                    <section class="menu-section">
+                        <h6 class="menu-section-name">UI</h6>
+                        <menu>
+                            <span class="menu-info" style="padding-left: 0px">
+                                <span  class="expand-arrow"></span>
+                                <svg></svg>
+                                <span class="name">文档</span>
+                                <div  class="pull-right"></div>
+                            </span>
+                            <ul class="children"></ul>
+                        </menu>
+                    </section>
+                    <section class="menu-section">
+                        <h6 class="menu-section-name">压力</h6>
+                        <menu>
+                            <span class="menu-info" style="padding-left: 0px">
+                                <span  class="expand-arrow"></span>
+                                <svg></svg>
+                                <span class="name">文档</span>
+                                <div  class="pull-right"></div>
+                            </span>
+                            <ul class="children"></ul>
+                        </menu>
+                    </section>
+                </div>
+
+            </div>
+        </menu>
+        <div class="layout-content">
+        <div  class="content">
+            <div class="nav-top lively">
+                {%  block content-nav  %}
+                {%  endblock  %}
+            </div>
+            {%  block main-content  %}
+            {%  endblock  %}
+
+        </div>
+    </div>
+    </div>
+
+</div>
+</body>
+</html>
