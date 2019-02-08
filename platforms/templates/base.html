@@ -10,10 +10,14 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
     <link rel="stylesheet" href="{% static 'css/noty.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bs3.css' %}">
 
     <script src="/static/js/noty.js" type="text/javascript"></script>
     <script src="/static/js/common.js" type="text/javascript"></script>
 
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 
     <title>Title</title>
     {%  block head  %}
@@ -127,5 +131,16 @@
     </div>
 
 </div>
+{%  block select  %}
+{%  endblock  %}
+
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            showmsg('{{ msg.tags }}', '{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
+
 </body>
 </html>

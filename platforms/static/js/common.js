@@ -27,3 +27,11 @@ function showerror(msg) {
     n.setTimeout(1000);
 
 }
+
+function showmsg(tags, msg) {
+    if (tags === "info"){
+        showsuccess(msg);
+    }else{
+        showerror(msg);
+    }
+}

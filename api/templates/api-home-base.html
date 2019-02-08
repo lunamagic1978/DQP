@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{%  block head  %}
+<script src="/static/js/api-home.js"></script>
+
+<style>
+
+    .a-active{
+        color: #3d444f;
+        background-color: #fff;
+    }
+
+    .a-detive{
+        color: #9ba3af;
+        background-color: #f5f7fa;
+
+    }
+
+    .a-detive:hover{
+        color: #3d444f;
+        background-color: #fff;
+    }
+
+    .a-detive:link{
+        color: #9ba3af;
+        background-color: #f5f7fa;
+    }
+
+</style>
+{%  endblock  %}
+
+{%  block content-nav  %}
+<div class="nav-item active">
+    接口管理
+</div>
+{%  endblock  %}

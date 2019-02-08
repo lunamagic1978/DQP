@@ -1,16 +1,23 @@
 {% extends 'api-home-base.html' %}
 
+{%  block content-nav  %}
+<div class="nav-item active">
+    接口管理
+</div>
+<div class="nav-item active">
+    {{  current_namespace  }}
+</div>
+{%  endblock  %}
+
 
 {%  block main-content  %}
-
-
 
 <div class="dao-view-main image-list">
     <div class="dao-view-sidebar">
         <div class="dao-list-group-container">
             <ul class="dao-list-group">
-                    <li class="dao-list-item active">
-                        <a href="/api/home" class="a-active">
+                    <li class="dao-list-item">
+                        <a href="/api/home" class="a-detive">
                             <span class="part-overflow-wrapper pr-sm">
                                 <span class="part-overflow-ellipsis text-ellipsis">
                                                 All
@@ -23,24 +30,30 @@
                     </li>
             </ul>
             <ul class="dao-list-group  image-namespace-list">
-                    {% for item in namespace_list %}
+              {% for item in namespace_list %}
+                    {%  ifequal current_namespace item.namespace  %}
+                        <li class="dao-list-item  active">
+                            <a href="/api/home/{{  item.pk }}" class="a-active">
+                            {%  else  %}
                         <li class="dao-list-item">
                             <a href="/api/home/{{  item.pk }}" class="a-detive">
-                                <div>
-                                    <span class="part-overflow-wrapper pr-sm">
-                                        <span class="part-overflow-ellipsis text-ellipsis">
+                    {%  endifequal  %}
 
-                                            {{  item.namespace }}
+                            <div>
+                                <span class="part-overflow-wrapper pr-sm">
+                                    <span class="part-overflow-ellipsis text-ellipsis">
 
-                                        </span>
+                                        {{  item.namespace }}
+
                                     </span>
-                                    <span class="icon">
-                                        >
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                    {% endfor %}
+                                </span>
+                                <span class="icon">
+                                    >
+                                </span>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
             </ul>
             <div class="dao-btn has-icon blue" onclick="showCreateNameSpace()">
                 <svg class="icon">
@@ -191,7 +204,7 @@
 
                                         </use>
                                     </svg>
-                                    <span>status</span>
+                                    <span>详情</span>
                                 </th>
                                 <th class="operation-inDCEReg">
 
@@ -199,6 +212,7 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             {% for project in project_query %}
                                            <tr class="">
                                 <td class="name td-name">
@@ -251,8 +265,7 @@
                                 </td> <!---->
                             </tr>
                             {% endfor %}
-
- </tbody> <!----> <!----></table>
+        </tbody> <!----> <!----></table>
                     </div>
                 </div>
             </div>
@@ -386,3 +399,7 @@
 
 
 {%  endblock  %}
+
+
+
+

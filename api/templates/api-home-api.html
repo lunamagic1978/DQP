@@ -1,67 +1,28 @@
 {% extends 'api-home-base.html' %}
 
+{%  block content-nav  %}
+<div class="nav-item active">
+    <a href="/api/home/">接口管理</a>
+</div>
+<div class="nav-item active">
+    <a href="/api/home/{{ current_namespace.pk }}">{{  current_namespace  }}</a>
+</div>
+    <div class="nav-item active">
+        {{  current_project  }}
+    </div>
+
+{%  endblock  %}
 
 {%  block main-content  %}
 
-
-
 <div class="dao-view-main image-list">
-    <div class="dao-view-sidebar">
-        <div class="dao-list-group-container">
-            <ul class="dao-list-group">
-                    <li class="dao-list-item active">
-                        <a href="/api/home" class="a-active">
-                            <span class="part-overflow-wrapper pr-sm">
-                                <span class="part-overflow-ellipsis text-ellipsis">
-                                                All
-                                </span>
-                            </span>
-                            <span class="icon">
-                                        >
-                            </span>
-                        </a>
-                    </li>
-            </ul>
-            <ul class="dao-list-group  image-namespace-list">
-                    {% for item in namespace_list %}
-                        <li class="dao-list-item">
-                            <a href="/api/home/{{  item.pk }}" class="a-detive">
-                                <div>
-                                    <span class="part-overflow-wrapper pr-sm">
-                                        <span class="part-overflow-ellipsis text-ellipsis">
 
-                                            {{  item.namespace }}
-
-                                        </span>
-                                    </span>
-                                    <span class="icon">
-                                        >
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                    {% endfor %}
-            </ul>
-            <div class="dao-btn has-icon blue" onclick="showCreateNameSpace()">
-                <svg class="icon">
-                    <use xlink:href="#icon_plus">
-                        <svg viewBox="0 0 16 16" id="icon_plus" width="100%" height="100%">
-                            <polygon points="15 7 9 7 9 1 7 1 7 7 1 7 1 9 7 9 7 15 9 15 9 9 15 9 15 7"></polygon>
-                        </svg>
-                    </use>
-                </svg>
-                <span class="text">Create NameSpace</span>
-            </div>
-
-        </div>
-
-    </div>
     <div class="dao-view-content">
         <div class="dao-tab right">
             <div class="dao-tab__header">
                 <ul class="dao-tab-nav dao-tab-nav-tab">
                     <li class="dao-tab-nav-item active">
-                        Project List
+                        API List
                     </li>
                 </ul>
             </div>
@@ -79,7 +40,7 @@
                                                 </svg>
                                             </use>
                                         </svg>
-                                        <span class="text">Create Project</span>
+                                        <span class="text">Create API</span>
                                     </button>
                                 </div>
                             </div>
@@ -123,7 +84,7 @@
                                         </use>
                                     </svg>
                                     <span>
-                                        Project name
+                                        Api name
                                     </span>
                                 </th>
                                 <th class="addr">
@@ -183,7 +144,7 @@
                                             </svg>
                                         </use>
                                     </svg>
-                                    <span>host</span>
+                                    <span>请求方式</span>
                                 </th>
                                 <th class="status">
                                     <svg>
@@ -191,7 +152,7 @@
 
                                         </use>
                                     </svg>
-                                    <span>status</span>
+                                    <span>详情</span>
                                 </th>
                                 <th class="operation-inDCEReg">
 
@@ -199,14 +160,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for project in project_query %}
+
+                            {% for api in api_list %}
                                            <tr class="">
                                 <td class="name td-name">
                                     <div class="item-logo-text">
                                         <div class="item-major">
                                             <span class="text-inner">
-                                                <a href="/api/home/{{ project.namespace.pk }}/{{ project.id }}" class="">
-                                                    {{ project.project_name }}
+                                                <a href="/api/home/{{ current_project.namespace.pk }}/{{ current_project.id }}/{{ api.id }}/doc">
+                                                    {{ api.path }}
                                                 </a>
                                             </span> <!---->
                                             <a href="https://github.com/DaoCloud/dao-2048.git" target="_blank" class="ml-xs">
@@ -220,27 +182,34 @@
                                 </td>
                                 <td class="addr">
                                     <div class="item-link item-major text-left">
-                                        {{ project.project_host }}
+                                        {{ api.api_request_method }}
                                     </div>
                                 </td> <!---->
                                 <td class="status no-build-flow">
                                     <div class="item-minor">
-                                        {{ project.project_description }}
+                                        {{ api.api_summary }}
                                     </div>
                                 </td>
                                 <td class="operation-inDCEReg">
                                     <div class="dao-btn-group">
                                         <button class="dao-btn ghost has-icon">
                                             <span class="text">
-                                                Swagger
+                                                <a href="/api/home/{{ current_project.namespace.pk }}/{{ current_project.id }}/{{ api.id }}/doc"> 文档</a>
                                             </span>
                                             <span data-v-1789a352="" class="auth-helper"><!---->
                                             </span>
                                         </button>
                                         <button class="dao-btn ghost has-icon">
                                             <span class="text">
-                                                <a href="/api/home/{{ project.namespace.pk }}/{{ project.id }}">
-                                                    Api_list
+                                                调试
+                                            </span>
+                                            <span data-v-1789a352="" class="auth-helper"><!---->
+                                            </span>
+                                        </button>
+                                        <button class="dao-btn ghost has-icon">
+                                            <span class="text">
+                                                <a href="/api/home/{{ current_project.namespace.pk }}/{{ current_project.id }}/{{ api.id }}/test">
+                                                    测试用例
                                                 </a>
                                             </span>
                                             <span data-v-1789a352="" class="auth-helper auth">
@@ -251,138 +220,11 @@
                                 </td> <!---->
                             </tr>
                             {% endfor %}
-
- </tbody> <!----> <!----></table>
+        </tbody> <!----> <!----></table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-{#    创建NameSpace弹框#}
-<div id="createNameSpace" class="dao-dialog-backdrop" style="display: none">
-    <div class="dao-dialog-padding-block" style="height: 100px"></div>
-    <div class="dao-dialog-container" style="width: 600px">
-        <div class="dao-dialog-header">
-            <span class="center">Create NameSpace</span>
-        </div>
-        <div class="dao-dialog-body">
-            <div class="dao-setting-section">
-                <div class="dao-setting-item">
-                    <div class="dao-setting-label">
-                        <div>name</div>
-                    </div>
-                    <div class="dao-setting-content">
-                        <div>
-                            <div class="dao-input-container icon-inside">
-                                <div class="dao-input-inner">
-                                    <div class="dao-popover-rel">
-                                        <input type="text" placeholder="e.g.:my-space" id="input-namespace">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="dao-dialog-footer">
-            <div>
-                <button class="dao-btn ghost" onclick="hiddenCreateNameSpace()">cancel</button>
-                <button class="dao-btn blue" onclick="createCreateNameSpace()">create</button>
-            </div>
-        </div>
-    </div>
-    <div class="dao-dialog-padding-block" style="height: 20px"></div>
-
-</div>
-
-{#    创建Project弹框#}
-<div id="createProject" class="create-repo-dialog" style="display: none">
-    <div class="dao-dialog-backdrop">
-        <div class="dao-dialog-padding-block" style="height: 100px;">
-
-        </div>
-        <div class="dao-dialog-container multistep-dialog" style="width: 800px;">
-            <div class="dao-dialog-header">
-                <span class="center">
-                    Create Project
-                </span>
-            </div>
-            <form method="post" action="/api/create_project/" class="form-horizontal">
-                {% csrf_token %}
-                <div class="dao-dialog-body">
-                <div class="multistep-wrap" style="width: 100%; height: 500px; transform: translateX(0%);">
-                    <div class="multistep-step">
-                        <div class="dao-setting-layout">
-                            <div class="dao-setting-section">
-                                <div class="dao-setting-item">
-                                    <div class="create-project-label">
-                                        NameSpace
-                                    </div>
-                                    <div class="create-project-label">
-                                        {{ create_project_form.namespace }}
-                                    </div>
-                                    <div class="create-project-label">
-                                        创建项目类型
-                                    </div>
-                                    <div>
-                                        {{ create_project_form.project_document_type }}
-                                    </div>
-                                </div>
-                                <div class="dao-setting-item">
-                                    <div class="create-project-label">
-                                        项目名称
-                                    </div>
-                                    <div style="width: 400px">
-                                        {{  create_project_form.project_name  }}
-                                    </div>
-                                </div>
-                                <div class="dao-setting-item">
-                                    <div class="create-project-label">
-                                        host
-                                    </div>
-                                    <div style="width: 400px">
-                                        {{  create_project_form.project_host  }}
-                                    </div>
-                                </div>
-                                <div class="dao-setting-item">
-                                    <div class="create-project-label">
-                                        项目描述
-                                    </div>
-                                    <div style="width: 400px">
-                                        {{  create_project_form.project_description  }}
-                                    </div>
-                                </div>
-{#                                <div class="dao-setting-item">#}
-{#                                    <div class="create-project-label">#}
-{#                                        Swagger_url#}
-{#                                    </div>#}
-{#                                    <div style="width: 400px">#}
-{#                                        {{  create_project_form.swagger_url  }}#}
-{#                                    </div>#}
-{#                                </div>#}
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-                            <div class="dao-dialog-footer">
-                <div>
-                    <button class="dao-btn ghost" onclick="hiddenCreateProject()">
-                        cancel
-                    </button>
-                    <button class="dao-btn blue" type="submit" name="submin_create_project">
-                        Create
-                    </button>
-
-            </form>
-
-                    </div></div> <!----></div> <div class="dao-dialog-padding-block" style="height: 20px;"></div></div></div>
-
-
-{%  endblock  %}
+{% endblock %}

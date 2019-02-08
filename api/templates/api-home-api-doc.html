@@ -1,0 +1,187 @@
+{% extends 'api-home-base.html' %}
+
+{%  block content-nav  %}
+<div class="nav-item active">
+    <a href="/api/home/">接口管理</a>
+</div>
+<div class="nav-item active">
+    <a href="/api/home/{{ current_namespace.pk }}">{{  current_namespace  }}</a>
+</div>
+    <div class="nav-item active">
+    <a href="/api/home/{{ current_namespace.pk }}/{{ current_project.pk }}">{{  current_project  }}</a>
+    </div>
+        <div class="nav-item active">
+        {{  current_api  }}
+    </div>
+
+{%  endblock  %}
+
+{%  block main-content  %}
+
+
+    <div style="margin-top: 20px">
+
+
+        <div style="margin-left: 100px">
+            <div>
+                <h5>基础信息</h5>
+            </div>
+            <div style="margin-left: 50px">
+                <h5>请求路径:{{ current_api.path }}</h5>
+            </div>
+            <div style="margin-left: 50px">
+                <h5>接口描述:{{ current_api.api_summary }}</h5>
+            </div>
+            <div style="margin-left: 50px">
+                <h5>请求方法:{{ current_api.api_request_method }}</h5>
+            </div>
+            {% if current_api.api_requset_type %}
+                <div style="margin-left: 50px">
+                    <h5>请求方法:{{ current_api.api_requset_type }}</h5>
+                </div>
+            {% endif %}
+
+        </div>
+
+        {% if  params_header_list %}
+        <div style="margin-left: 100px;  margin-top: 20px">
+            <h5>header：</h5>
+            <div class="container" style="margin: 0">
+
+                <table border="1" class="table table-striped table-bordered table-hover table-condensed table-responsive" id="tableParams">
+                    <tr>
+                        <td style="text-align: center; width: 100px">字段</td>
+                        <td style="text-align: center; width: 100px">类型</td>
+                        <td style="text-align: center; width: 100px">必选</td>
+                        <td style="text-align: center">描述</td>
+                        <td style="text-align: center; width: 100px">默认值</td>
+                        <td style="text-align: center; width: 100px">操作</td>
+                    </tr>
+
+
+                {% for item in params_header_list %}
+                    <tr>
+                        <td>{{ item.param_name }}</td>
+                        <td>{{ item.param_type }}</td>
+                        <td>{{ item.param_required }}</td>
+                        <td>{{ item.param_description }}</td>
+                        <td>{{ item.param_default }}</td>
+                        <td>{{ item.DELETE }}</td>
+                    </tr>
+
+                {% endfor %}
+
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if  params_path_list %}
+        <div style="margin-left: 100px;  margin-top: 20px">
+            <h5>path：</h5>
+            <div class="container" style="margin: 0">
+
+                <table border="1" class="table table-striped table-bordered table-hover table-condensed table-responsive" id="tableParams">
+                    <tr>
+                        <td style="text-align: center; width: 100px">字段</td>
+                        <td style="text-align: center; width: 100px">类型</td>
+                        <td style="text-align: center; width: 100px">必选</td>
+                        <td style="text-align: center">描述</td>
+                        <td style="text-align: center; width: 100px">默认值</td>
+                        <td style="text-align: center; width: 100px">操作</td>
+                    </tr>
+
+
+                {% for item in params_path_list %}
+                    <tr>
+                        <td>{{ item.param_name }}</td>
+                        <td>{{ item.param_type }}</td>
+                        <td>{{ item.param_required }}</td>
+                        <td>{{ item.param_description }}</td>
+                        <td>{{ item.param_default }}</td>
+                        <td>{{ item.DELETE }}</td>
+                    </tr>
+
+                {% endfor %}
+
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if  params_query_list %}
+        <div style="margin-left: 100px;  margin-top: 20px">
+            <h5>param：</h5>
+            <div class="container" style="margin: 0">
+
+                <table border="1" class="table table-striped table-bordered table-hover table-condensed table-responsive" id="tableParams">
+                  <tr>
+                        <td style="text-align: center; width: 100px">字段</td>
+                        <td style="text-align: center; width: 100px">类型</td>
+                        <td style="text-align: center; width: 100px">必选</td>
+                        <td style="text-align: center">描述</td>
+                        <td style="text-align: center; width: 100px">默认值</td>
+                        <td style="text-align: center; width: 100px">操作</td>
+                    </tr>
+
+
+                {% for item in params_query_list %}
+                    <tr>
+                        <td>{{ item.param_name }}</td>
+                        <td>{{ item.param_type }}</td>
+                        <td>{{ item.param_required }}</td>
+                        <td>{{ item.param_description }}</td>
+                        <td>{{ item.param_default }}</td>
+                        <td>{{ item.DELETE }}</td>
+                    </tr>
+
+                {% endfor %}
+
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if  params_request_body_list %}
+        <div style="margin-left: 100px;  margin-top: 20px">
+            <h5>requestbody：</h5>
+            <div class="container" style="margin: 0">
+
+                <table border="1" class="table table-striped table-bordered table-hover table-condensed table-responsive" id="tableParams">
+                  <tr>
+                        <td style="text-align: center; width: 100px">字段</td>
+                        <td style="text-align: center; width: 100px">类型</td>
+                        <td style="text-align: center; width: 100px">必选</td>
+                        <td style="text-align: center">描述</td>
+                        <td style="text-align: center; width: 100px">默认值</td>
+                        <td style="text-align: center; width: 100px">操作</td>
+                    </tr>
+
+
+                {% for item in params_request_body_list %}
+                    <tr>
+                        <td>{{ item.param_name }}</td>
+                        <td>{{ item.param_type }}</td>
+                        <td>{{ item.param_required }}</td>
+                        <td>{{ item.param_description }}</td>
+                        <td>{{ item.param_default }}</td>
+                        <td>{{ item.DELETE }}</td>
+                    </tr>
+
+                {% endfor %}
+
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+
+
+
+
+    </div>
+
+
+
+
+{% endblock %}

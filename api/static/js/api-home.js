@@ -1,6 +1,6 @@
 function showCreateNameSpace() {
     $('#createNameSpace').css({display:'flex'});
-
+    console.log("createnamespace")
 }
 
 function hiddenCreateNameSpace() {
@@ -39,4 +39,32 @@ function createCreateNameSpace() {
 
     hiddenCreateNameSpace();
 
+}
+
+
+function showCreateProject() {
+    $('#createProject').css({display:'flex'});
+
+}
+
+function hiddenCreateProject() {
+    $('#createProject').css({display: 'none'});
+}
+
+function namespaceSelectSwitchClikck() {
+    if ($('#namespace-select-switch')[0].className === "dao-select-switch"){
+        $('#namespace-select-switch')[0].className = "dao-select-switch open";
+        $('#namespace-select').css({display: "flex"})
+    }
+    else
+    {
+        $('#namespace-select-switch')[0].className = "dao-select-switch";
+        $('#namespace-select').css({display: "none"})
+    }
+}
+
+function namespaceSelected(namespace){
+    console.log(namespace)
+    $('#namespace-select').css({display: "none"})
+    $('#namespace-select-switch')[0].className = "dao-select-switch";
 }
