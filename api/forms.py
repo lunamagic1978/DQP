@@ -14,7 +14,9 @@ PROJECT_CREATE_TYPE = (("直接创建", "直接创建"),
 TYPE_CHOICE = (("input", "输入"),
                ("empty", "为空"),
                ("kwags", "参数"),
-               ("script", "脚本"),)
+               ("script", "脚本"),
+               ("no", "不构建")
+               )
 
 RESULT_TYPE_CHOICE = (('Str', 'Str'),
                       ('Int', 'Int'),
@@ -71,148 +73,151 @@ class TestCase(forms.Form):
         result_field, result_type = class_get_params.get_result_field()
 
         if testcase_objs:
-            case_num = int(kwargs['prefix'][5:]) + 1
-            case_obj = ApiTestCase.objects.get(api_id_id=api_id, case_num=case_num)
-            header_tmp_dict = case_obj.case_header
-            path_tmp_dict = case_obj.case_path
-            query_tmp_dict = case_obj.case_param
-            body_tmp_dict = case_obj.case_body
-            result_tmp_dict = case_obj.case_response
+            try:
+                case_num = int(kwargs['prefix'][5:]) + 1
+                case_obj = ApiTestCase.objects.get(api_id_id=api_id, case_num=case_num)
+                header_tmp_dict = case_obj.case_header
+                path_tmp_dict = case_obj.case_path
+                query_tmp_dict = case_obj.case_param
+                body_tmp_dict = case_obj.case_body
+                result_tmp_dict = case_obj.case_response
 
-            header_dict = tmp_handle(header_tmp_dict)
-            path_dict = tmp_handle(path_tmp_dict)
-            query_dict = tmp_handle(query_tmp_dict)
-            body_dict = tmp_handle(body_tmp_dict)
-            result_dict = tmp_handle(result_tmp_dict)
+                header_dict = tmp_handle(header_tmp_dict)
+                path_dict = tmp_handle(path_tmp_dict)
+                query_dict = tmp_handle(query_tmp_dict)
+                body_dict = tmp_handle(body_tmp_dict)
+                result_dict = tmp_handle(result_tmp_dict)
 
-            for header in params_header_field:
-                fields_name = 'header_' + header
-                self.fields[fields_name] = forms.CharField()
-                self.fields[fields_name].widget.attrs["style"] = "width:100%;"
-                self.fields[fields_name].required = False
-                try:
-                    self.fields[fields_name].initial = header_dict[fields_name]
-                except Exception as err:
-                    print(err)
+                for header in params_header_field:
+                    fields_name = 'header_' + header
+                    self.fields[fields_name] = forms.CharField()
+                    self.fields[fields_name].widget.attrs["style"] = "width:100%;"
+                    self.fields[fields_name].required = False
+                    try:
+                        self.fields[fields_name].initial = header_dict[fields_name]
+                    except Exception as err:
+                        print(err)
 
-                fields_type = 'type_header_' + header
-                self.fields[fields_type] = forms.ChoiceField(choices=TYPE_CHOICE)
-                self.fields[fields_type].widget.attrs["style"] = "width:100%;"
-                try:
-                    self.fields[fields_type].initial = header_dict[fields_type]
-                except Exception as err:
-                    print(err)
+                    fields_type = 'type_header_' + header
+                    self.fields[fields_type] = forms.ChoiceField(choices=TYPE_CHOICE)
+                    self.fields[fields_type].widget.attrs["style"] = "width:100%;"
+                    try:
+                        self.fields[fields_type].initial = header_dict[fields_type]
+                    except Exception as err:
+                        print(err)
 
-            for path in params_path_field:
-                fields_name = 'path_' + path
-                self.fields[fields_name] = forms.CharField()
-                self.fields[fields_name].widget.attrs["style"] = "width:100%;"
-                self.fields[fields_name].required = False
-                try:
-                    self.fields[fields_name].initial = path_dict[fields_name]
-                except Exception as err:
-                    print(err)
+                for path in params_path_field:
+                    fields_name = 'path_' + path
+                    self.fields[fields_name] = forms.CharField()
+                    self.fields[fields_name].widget.attrs["style"] = "width:100%;"
+                    self.fields[fields_name].required = False
+                    try:
+                        self.fields[fields_name].initial = path_dict[fields_name]
+                    except Exception as err:
+                        print(err)
 
-                fields_type = 'type_path_' + path
-                self.fields[fields_type] = forms.ChoiceField(choices=TYPE_CHOICE)
-                self.fields[fields_type].widget.attrs["style"] = "width:100%;"
-                try:
-                    self.fields[fields_type].initial = path_dict[fields_type]
-                except Exception as err:
-                    print(err)
+                    fields_type = 'type_path_' + path
+                    self.fields[fields_type] = forms.ChoiceField(choices=TYPE_CHOICE)
+                    self.fields[fields_type].widget.attrs["style"] = "width:100%;"
+                    try:
+                        self.fields[fields_type].initial = path_dict[fields_type]
+                    except Exception as err:
+                        print(err)
 
-            for query in params_query_field:
-                fields_name = 'query_' + query
-                self.fields[fields_name] = forms.CharField()
-                self.fields[fields_name].widget.attrs["style"] = "width:100%;"
-                self.fields[fields_name].required = False
-                try:
-                    self.fields[fields_name].initial = query_dict[fields_name]
-                except Exception as err:
-                    print(err)
+                for query in params_query_field:
+                    fields_name = 'query_' + query
+                    self.fields[fields_name] = forms.CharField()
+                    self.fields[fields_name].widget.attrs["style"] = "width:100%;"
+                    self.fields[fields_name].required = False
+                    try:
+                        self.fields[fields_name].initial = query_dict[fields_name]
+                    except Exception as err:
+                        print(err)
 
-                fields_type = 'type_query_' + query
-                self.fields[fields_type] = forms.ChoiceField(choices=TYPE_CHOICE)
-                self.fields[fields_type].widget.attrs["style"] = "width:100%;"
-                try:
-                    self.fields[fields_type].initial = query_dict[fields_type]
-                except Exception as err:
-                    print(err)
+                    fields_type = 'type_query_' + query
+                    self.fields[fields_type] = forms.ChoiceField(choices=TYPE_CHOICE)
+                    self.fields[fields_type].widget.attrs["style"] = "width:100%;"
+                    try:
+                        self.fields[fields_type].initial = query_dict[fields_type]
+                    except Exception as err:
+                        print(err)
 
-            for body in request_body_field:
-                fields_name = 'body_' + body
-                self.fields[fields_name] = forms.CharField()
-                self.fields[fields_name].widget.attrs["style"] = "width:100%;"
-                self.fields[fields_name].required = False
-                try:
-                    self.fields[fields_name].initial = body_dict[fields_name]
-                except Exception as err:
-                    print(err)
+                for body in request_body_field:
+                    fields_name = 'body_' + body
+                    self.fields[fields_name] = forms.CharField()
+                    self.fields[fields_name].widget.attrs["style"] = "width:100%;"
+                    self.fields[fields_name].required = False
+                    try:
+                        self.fields[fields_name].initial = body_dict[fields_name]
+                    except Exception as err:
+                        print(err)
 
-                fields_type = 'type_body_' + body
-                self.fields[fields_type] = forms.ChoiceField(choices=TYPE_CHOICE)
-                self.fields[fields_type].widget.attrs["style"] = "width:100%;"
-                try:
-                    self.fields[fields_type].initial = body_dict[fields_type]
-                except Exception as err:
-                    print(err)
+                    fields_type = 'type_body_' + body
+                    self.fields[fields_type] = forms.ChoiceField(choices=TYPE_CHOICE)
+                    self.fields[fields_type].widget.attrs["style"] = "width:100%;"
+                    try:
+                        self.fields[fields_type].initial = body_dict[fields_type]
+                    except Exception as err:
+                        print(err)
 
-            for resulte in result_field:
-                fields_name = 'result_expect_value_' + resulte
-                self.fields[fields_name] = forms.CharField()
-                self.fields[fields_name].widget.attrs["style"] = "width:100%;"
-                self.fields[fields_name].required = False
-                try:
-                    self.fields[fields_name].initial = result_dict[fields_name]
-                except Exception as err:
-                    print(err)
-
-
-
-
-
-                fields_type = 'type_result_' + resulte
-                self.fields[fields_type] = forms.ChoiceField(choices=RESULT_TYPE_CHOICE)
-                self.fields[fields_type].widget.attrs["style"] = "width:100%;"
-                try:
-                    self.fields[fields_type].initial = result_dict[fields_type]
-                except Exception as err:
-                    print(err)
-
-                fields_type = 'logic_result_' + resulte
-                self.fields[fields_type] = forms.ChoiceField(choices=RESULT_LOGIC_CHOICE)
-                self.fields[fields_type].widget.attrs["style"] = "width:100%;"
-                try:
-                    self.fields[fields_type].initial = result_dict[fields_type]
-                except Exception as err:
-                    print(err)
-
-                fields_name = 'result_response_value_' + resulte
-                self.fields[fields_name] = forms.CharField()
-                self.fields[fields_name].widget.attrs["style"] = "width:100%;"
-                self.fields[fields_name].required = False
-                self.fields[fields_name].widget.attrs["readonly"] = True
-
-                try:
-                    judge_result = result_dict.get("judge_result_{}".format(resulte))
-                    if judge_result == "no_judge":
-                        self.fields[fields_name].widget.attrs["style"] = "width:100%;  background: #9ba3af"
-                    elif judge_result:
-                        self.fields[fields_name].widget.attrs["style"] = "width:100%;  background: aquamarine"
-                    else:
-                        self.fields[fields_name].widget.attrs["style"] = "width:100%;  background: #FFE4E1"
-                except Exception as err:
-                    print(err)
-                    judge_result = "no_judge"
-
-
-                try:
-                    if judge_result == "no_judge":
-                        pass
-                    else:
+                for resulte in result_field:
+                    fields_name = 'result_expect_value_' + resulte
+                    self.fields[fields_name] = forms.CharField()
+                    self.fields[fields_name].widget.attrs["style"] = "width:100%;"
+                    self.fields[fields_name].required = False
+                    try:
                         self.fields[fields_name].initial = result_dict[fields_name]
-                except Exception as err:
-                    print(err)
+                    except Exception as err:
+                        print(err)
+
+
+
+
+
+                    fields_type = 'type_result_' + resulte
+                    self.fields[fields_type] = forms.ChoiceField(choices=RESULT_TYPE_CHOICE)
+                    self.fields[fields_type].widget.attrs["style"] = "width:100%;"
+                    try:
+                        self.fields[fields_type].initial = result_dict[fields_type]
+                    except Exception as err:
+                        print(err)
+
+                    fields_type = 'logic_result_' + resulte
+                    self.fields[fields_type] = forms.ChoiceField(choices=RESULT_LOGIC_CHOICE)
+                    self.fields[fields_type].widget.attrs["style"] = "width:100%;"
+                    try:
+                        self.fields[fields_type].initial = result_dict[fields_type]
+                    except Exception as err:
+                        print(err)
+
+                    fields_name = 'result_response_value_' + resulte
+                    self.fields[fields_name] = forms.CharField()
+                    self.fields[fields_name].widget.attrs["style"] = "width:100%;"
+                    self.fields[fields_name].required = False
+                    self.fields[fields_name].widget.attrs["readonly"] = True
+
+                    try:
+                        judge_result = result_dict.get("judge_result_{}".format(resulte))
+                        if judge_result == "no_judge":
+                            self.fields[fields_name].widget.attrs["style"] = "width:100%;  background: #9ba3af"
+                        elif judge_result:
+                            self.fields[fields_name].widget.attrs["style"] = "width:100%;  background: aquamarine"
+                        else:
+                            self.fields[fields_name].widget.attrs["style"] = "width:100%;  background: #FFE4E1"
+                    except Exception as err:
+                        print(err)
+                        judge_result = "no_judge"
+
+
+                    try:
+                        if judge_result == "no_judge":
+                            pass
+                        else:
+                            self.fields[fields_name].initial = result_dict[fields_name]
+                    except Exception as err:
+                        print(err)
+            except Exception as err:
+                print(err)
 
 
         else:

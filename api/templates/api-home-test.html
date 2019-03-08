@@ -176,4 +176,86 @@
         </form>
     </div>
 
+    <script>
+        function addCase() {
+            var count = $('#id_form-TOTAL_FORMS').attr("value");
+            var smaple_tr1 = $('#tableCase').find('tr');
+            var html_tr1 =  smaple_tr1.eq(3).clone(true);
+            var html_tr2 =  smaple_tr1.eq(4).clone(true);
+            var html_tr3 =  smaple_tr1.eq(5).clone(true);
+            var html_tr4 =  smaple_tr1.eq(6).clone(true);
+            var form_num =  (smaple_tr1.length+1)/4;
+            console.log(form_num)
+            console.log(count)
+            console.log(smaple_tr1)
+
+            html_tr1.find('input').each(function () {
+                var name = $(this).attr('name');
+                var new_name = name.replace(0, form_num-1);
+                var id_form = $(this).attr('id');
+                var new_id_form = id_form.replace(0, form_num-1);
+                $(this).attr('name', new_name);
+                $(this).attr('id', new_id_form);
+                $(this).attr('value', '');
+
+                var ord_flag = isContains(new_name, 'ORDER')
+
+                if ( ord_flag ){
+                    $(this).attr('value', form_num);
+                }
+            });
+
+            html_tr2.find('select').each(function () {
+                var name = $(this).attr('name');
+                var new_name = name.replace(0, form_num-1);
+                var id_form = $(this).attr('id');
+                var new_id_form = id_form.replace(0, form_num-1);
+                $(this).attr('name', new_name);
+                $(this).attr('id', new_id_form);
+                $(this).attr('value', '');
+                $(this).attr('style', 'width:100%;');
+            });
+
+            html_tr3.find('select').each(function () {
+                var name = $(this).attr('name');
+                var new_name = name.replace(0, form_num-1);
+                var id_form = $(this).attr('id');
+                var new_id_form = id_form.replace(0, form_num-1);
+                console.log(name)
+                console.log(new_name)
+                console.log(id_form)
+                console.log(new_id_form)
+                $(this).attr('name', new_name);
+                $(this).attr('id', new_id_form);
+                $(this).attr('value', '');
+                $(this).attr('style', 'width:100%;');
+            });
+
+            html_tr4.find('input').each(function () {
+                var name = $(this).attr('name');
+                var new_name = name.replace(0, form_num-1);
+                var id_form = $(this).attr('id');
+                var new_id_form = id_form.replace(0, form_num-1);
+                $(this).attr('name', new_name);
+                $(this).attr('id', new_id_form);
+                $(this).attr('value', '');
+                $(this).attr('style', 'width:100%;');
+            });
+
+            $('#tableCase').append(html_tr1);
+            $('#tableCase').append(html_tr2);
+            $('#tableCase').append(html_tr3);
+            $('#tableCase').append(html_tr4);
+
+            $('#id_form-TOTAL_FORMS').attr("value",parseInt(count)+1);
+            $('#id_form-INITIAL_FORMS').attr("value",parseInt(count)+1);
+
+
+        function isContains(str, substr) {
+            return str.indexOf(substr) >= 0;
+        }
+            
+        }
+    </script>
+    
 {% endblock %}
